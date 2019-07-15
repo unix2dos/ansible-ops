@@ -1,0 +1,6 @@
+---
+# defaults file for shadowsocks
+
+SHADOWSOCKS_PORT: 3389
+SHADOWSOCKS_METHOD: 'aes-256-cfb'
+SHADOWSOCKS_TIMEOUT: 60

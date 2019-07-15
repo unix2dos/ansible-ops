@@ -1,0 +1,33 @@
+---
+# tasks file for shadowsocks
+
+
+- block:
+  - name: install package
+    apt:
+      name: shadowsocks-libev
+    tags: [shadowsocks, sss, sss-apt]
+
+  - name: configure package
+    template:
+      src: server.json.j2
+      dest: /etc/shadowsocks-libev/config.json
+    tags: [shadowsocks, sss, sss-cfg]
+    notify:
+      - restart shadowsocks-libev
+
+  - name: disable orig service
+    service:
+      name: shadowsocks-libev-server@sss
+      enabled: no
+      state: stopped
+    tags: [shadowsocks, sss, sss-cfg]
+
+  - name: ensure service
+    service:
+      name: shadowsocks-libev
+      enabled: yes
+      state: started
+    tags: [shadowsocks, sss, sss-cfg]
+
+  when: ansible_os_family == 'Debian'
